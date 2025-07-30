@@ -1,1 +1,1 @@
-// Tänne tulee main game loop
+// Main game loop will be here
