@@ -8,5 +8,5 @@ Typeracer game where accuracy and speed affects the total score. If you write wi
 [Vite](https://vite.dev/guide/)
 [TypeScript](https://www.typescriptlang.org/)
 [Tailwind](https://tailwindcss.com/)
-[FastAPI](https://fastapi.tiangolo.com/)
+[Prisma](https://prisma.io/)
 [PostgreSQL](https://www.postgresql.org/)
