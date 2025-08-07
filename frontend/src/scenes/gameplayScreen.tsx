@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function GameScreen() {
   const [currentSentence, setCurrentSentence] = useState("");
@@ -8,6 +9,7 @@ function GameScreen() {
   const [accuracy, setAccuracy] = useState(100);
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const sentences = [
     "Prometheus stole fire from the gods and gave it to man",
@@ -46,7 +48,7 @@ function GameScreen() {
         if (sentenceIndex + 1 < sentences.length) {
           setSentenceIndex(sentenceIndex + 1);
         } else {
-          alert("Game Finished!");
+          navigate("/aftergame");
         }
       }, 500);
     }
