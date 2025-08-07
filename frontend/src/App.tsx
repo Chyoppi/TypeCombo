@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainMenu from "./scenes/mainMenuscreen";
 import GameScreen from "./scenes/gameplayScreen";
 import SignIn from "./scenes/signinForm";
-import RegisterForm from "./scenes/RegisterForm";
+import RegisterForm from "./scenes/registerForm";
 
 function App() {
   return (
