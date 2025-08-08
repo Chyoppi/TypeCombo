@@ -1,25 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSentencePicker } from "../components/sentencePicker";
 
 function GameScreen() {
-  const [currentSentence, setCurrentSentence] = useState("");
+  const { currentSentence, getNewSentence } = useSentencePicker();
   const [userInput, setUserInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
-  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const [sentenceIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(3);
   const [isGameActive, setIsGameActive] = useState(false);
 
-  const sentences = [
-    "Prometheus stole fire from the gods and gave it to man",
-    "For this, he was chained to a rock and tortured for eternity",
-  ];
-
   useEffect(() => {
-    setCurrentSentence(sentences[sentenceIndex]);
+    getNewSentence();
     setUserInput("");
     setStartTime(null);
     inputRef.current?.focus();
@@ -33,10 +29,9 @@ function GameScreen() {
       return () => clearTimeout(timer);
     } else {
       setIsGameActive(true);
-      setCurrentSentence(sentences[sentenceIndex]);
       inputRef.current?.focus();
     }
-  }, [countdown, sentenceIndex, sentences]);
+  }, [countdown, sentenceIndex]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isGameActive) {
@@ -64,9 +59,7 @@ function GameScreen() {
     // Check if completed
     if (value === currentSentence) {
       setTimeout(() => {
-        if (sentenceIndex + 1 < sentences.length) {
-          setSentenceIndex(sentenceIndex + 1);
-        } else {
+        {
           navigate("/aftergame");
         }
       }, 500);
