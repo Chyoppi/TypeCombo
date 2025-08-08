@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <div className="absolute top-4 right-4 space-x-4">
       {user ? (
-        <div className="flex items-center gap-4 text-white rounded hover:bg-red-800 font-mono">
+        <div className="flex items-center gap-4 text-white rounded font-mono">
           <span>{user.username}</span>
           <button
             onClick={logout}
