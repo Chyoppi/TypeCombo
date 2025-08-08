@@ -1,26 +1,43 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface RegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onRegister: (username: string, email: string, password: string) => void;
 }
 
-export default function SignInModal({
-  isOpen,
-  onClose,
-  onRegister,
-}: RegisterModalProps) {
+export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onRegister(username, email, password);
-    onClose();
+    setError("");
+
+    try {
+      const res = await fetch(`${API_URL}/players/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Registration failed");
+        return;
+      }
+
+      console.log("Registered:", data);
+      onClose();
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong");
+    }
   };
 
   return (
@@ -33,11 +50,12 @@ export default function SignInModal({
           &times;
         </button>
         <h2 className="text-2xl font-bold mb-4 text-center text-white">
-          Sign In
+          Register
         </h2>
+        {error && <p className="text-red-400 text-sm mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
-            type="username"
+            type="text"
             placeholder="Username"
             className="p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={username}
@@ -64,7 +82,7 @@ export default function SignInModal({
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 rounded p-3 font-semibold"
           >
-            Sign In
+            Register
           </button>
         </form>
       </div>
