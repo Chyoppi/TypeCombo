@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../auth/userContext.tsx";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface SignInModalProps {
@@ -13,6 +14,8 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
 
   if (!isOpen) return null;
 
+  const { login } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // clear previous errors
@@ -26,9 +29,11 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        setError(data.error || "Something went wrong");
-        return;
+      if (res.ok) {
+        login(data);
+        onClose();
+      } else {
+        console.error(data.error);
       }
 
       console.log("Logged in:", data);
