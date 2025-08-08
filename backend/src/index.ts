@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import playerRoutes from "./routes/playerRoutes";
 
@@ -6,6 +7,12 @@ const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*", // ⚠ For testing only, not for production
+  })
+);
 
 //Testing endpoint
 app.get("/ping", (req, res) => {

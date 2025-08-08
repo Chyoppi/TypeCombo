@@ -1,25 +1,41 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface SignInModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSignIn: (email: string, password: string) => void;
 }
 
-export default function SignInModal({
-  isOpen,
-  onClose,
-  onSignIn,
-}: SignInModalProps) {
+export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSignIn(email, password);
-    onClose();
+    setError(""); // clear previous errors
+
+    try {
+      const res = await fetch(`${API_URL}/players/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong");
+        return;
+      }
+
+      console.log("Logged in:", data);
+      onClose();
+    } catch (err) {
+      setError("Network error, try again.");
+    }
   };
 
   return (
@@ -34,6 +50,7 @@ export default function SignInModal({
         <h2 className="text-2xl font-bold mb-4 text-center text-white">
           Sign In
         </h2>
+        {error && <p className="text-red-400 text-sm mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="email"
