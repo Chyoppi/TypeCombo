@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import SignInModal from "../components/popupSignIn";
+import RegisterModal from "../components/popupRegister";
 
 function MainMenu() {
+  const [RegisterOpen, setRegisterOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
   const handleSignIn = (email: string, password: string) => {
@@ -25,11 +27,17 @@ function MainMenu() {
           onSignIn={handleSignIn}
         />
 
-        <Link to="/register">
-          <button className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-800 font-mono">
-            Register
-          </button>
-        </Link>
+        <button
+          className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
+          onClick={() => setRegisterOpen(true)}
+        >
+          Register
+        </button>
+        <RegisterModal
+          isOpen={RegisterOpen}
+          onClose={() => setRegisterOpen(false)}
+          onRegister={handleSignIn}
+        />
       </div>
 
       <img
