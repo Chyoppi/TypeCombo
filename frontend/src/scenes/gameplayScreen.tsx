@@ -79,6 +79,7 @@ function GameScreen() {
         className="w-full max-w-xl p-3 text-white rounded bg-gray-700 font-mono"
         value={userInput}
         onChange={handleInputChange}
+        onPaste={(e) => e.preventDefault()}
         ref={inputRef}
         placeholder="Start typing..."
       />
