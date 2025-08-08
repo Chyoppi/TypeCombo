@@ -1,15 +1,30 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import SignInModal from "../components/popupSignIn";
 
 function MainMenu() {
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+
+  const handleSignIn = (email: string, password: string) => {
+    console.log("User signed in:", email, password);
+    // Here you can call your DB or authentication API
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-4">
       <div className="absolute top-4 right-4 space-x-4">
-        <Link to="/signin">
-          <button className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-800 font-mono">
-            Sign in
-          </button>
-        </Link>
+        <button
+          className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
+          onClick={() => setIsSignInOpen(true)}
+        >
+          Sign in
+        </button>
+        <SignInModal
+          isOpen={isSignInOpen}
+          onClose={() => setIsSignInOpen(false)}
+          onSignIn={handleSignIn}
+        />
+
         <Link to="/register">
           <button className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-800 font-mono">
             Register
