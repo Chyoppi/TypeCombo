@@ -18,9 +18,29 @@ function MainMenu() {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-xl mt-4 px-6 py-2 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
+          className="text-xl mt-4 px-5 py-2 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
         >
           Start Game
+        </motion.button>
+      </Link>
+      <Link to="/">
+        <motion.button
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="text-xl mt-4 px-12 py-2 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
+        >
+          Daily
+        </motion.button>
+      </Link>
+      <Link to="/">
+        <motion.button
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="text-xl mt-4 px-3 py-2 bg-red-600 text-white rounded hover:bg-red-800 font-mono"
+        >
+          Leaderboard
         </motion.button>
       </Link>
     </div>
