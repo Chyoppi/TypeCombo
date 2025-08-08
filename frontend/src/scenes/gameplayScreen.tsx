@@ -10,6 +10,8 @@ function GameScreen() {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [countdown, setCountdown] = useState(3);
+  const [isGameActive, setIsGameActive] = useState(false);
 
   const sentences = [
     "Prometheus stole fire from the gods and gave it to man",
@@ -23,7 +25,24 @@ function GameScreen() {
     inputRef.current?.focus();
   }, [sentenceIndex]);
 
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsGameActive(true);
+      setCurrentSentence(sentences[sentenceIndex]);
+      inputRef.current?.focus();
+    }
+  }, [countdown, sentenceIndex, sentences]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isGameActive) {
+      return;
+    }
+
     const value = e.target.value;
     if (!startTime) setStartTime(Date.now());
 
@@ -69,6 +88,13 @@ function GameScreen() {
     });
   };
 
+  const getPlaceholderText = () => {
+    if (countdown > 0) {
+      return `Get ready... ${countdown}`;
+    }
+    return "Start typing...";
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-6 px-4">
       <div className="w-full max-w-4xl bg-gray-800 rounded-2xl p-8 shadow-xl">
@@ -86,7 +112,7 @@ function GameScreen() {
           onPaste={(e) => e.preventDefault()}
           onDrop={(e) => e.preventDefault()}
           ref={inputRef}
-          placeholder="Start typing..."
+          placeholder={getPlaceholderText()}
         />
 
         {/* Stats */}
