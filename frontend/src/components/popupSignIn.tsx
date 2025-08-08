@@ -36,7 +36,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
         console.error(data.error);
       }
 
-      console.log("Logged in:", data);
+      console.log("Logged in:", data); // Delete this line in production
       onClose();
     } catch (err) {
       setError("Network error, try again.");

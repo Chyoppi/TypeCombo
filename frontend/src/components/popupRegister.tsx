@@ -32,7 +32,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
         return;
       }
 
-      console.log("Registered:", data);
+      console.log("Registered:", data); // Delete this line in production
       onClose();
     } catch (err) {
       console.error(err);
