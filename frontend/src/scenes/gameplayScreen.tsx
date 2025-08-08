@@ -71,7 +71,7 @@ function GameScreen() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-6 px-4">
-      <div className="text-xl max-w-3xl text-center break-words font-mono">
+      <div className="text-xl max-w-3xl text-center break-words font-mono select-none">
         {renderColoredSentence()}
       </div>
 
