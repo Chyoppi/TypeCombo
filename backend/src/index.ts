@@ -1,25 +1,19 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import playerRoutes from "./routes/playerRoutes";
 
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
 
+//Testing endpoint
 app.get("/ping", (req, res) => {
   res.json({ message: "pong" });
 });
 
 // Create a new player
-app.post("/players", async (req, res) => {
-  const { username } = req.body;
-  try {
-    const player = await prisma.player.create({ data: { username } });
-    res.json(player);
-  } catch (e) {
-    res.status(400).json({ error: "Username already exists" });
-  }
-});
+app.use("/players", playerRoutes);
 
 // Add a typing session
 app.post("/sessions", async (req, res) => {
