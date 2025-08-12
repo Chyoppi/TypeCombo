@@ -20,13 +20,7 @@ function GameScreen() {
   const [isGameActive, setIsGameActive] = useState(false);
 
   useEffect(() => {
-    getNewSentence();
-    setUserInput("");
     setStartTime(null);
-    inputRef.current?.focus();
-  }, [sentenceIndex]);
-
-  useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
@@ -35,6 +29,8 @@ function GameScreen() {
     } else {
       setIsGameActive(true);
       inputRef.current?.focus();
+      getNewSentence();
+      setUserInput("");
     }
   }, [countdown, sentenceIndex]);
 
