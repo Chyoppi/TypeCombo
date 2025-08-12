@@ -1,27 +1,25 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/userContext";
 import { useSentencePicker } from "../components/sentencePicker";
+import { ColoredSentence } from "../components/coloredSentences";
+import { PostScore } from "../components/postScore";
+import { useHandleInputChange } from "../components/handleInput";
 
 function GameScreen() {
+  const { user } = useAuth();
   const { currentSentence, getNewSentence } = useSentencePicker();
   const [userInput, setUserInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
+  const [mistakes, setMistakes] = useState<boolean[]>([]);
   const [sentenceIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
   const [countdown, setCountdown] = useState(3);
   const [isGameActive, setIsGameActive] = useState(false);
 
   useEffect(() => {
-    getNewSentence();
-    setUserInput("");
     setStartTime(null);
-    inputRef.current?.focus();
-  }, [sentenceIndex]);
-
-  useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
@@ -30,56 +28,27 @@ function GameScreen() {
     } else {
       setIsGameActive(true);
       inputRef.current?.focus();
+      getNewSentence();
+      setUserInput("");
     }
   }, [countdown, sentenceIndex]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isGameActive) {
-      return;
-    }
-
-    const value = e.target.value;
-    if (!startTime) setStartTime(Date.now());
-
-    setUserInput(value);
-
-    // Accuracy calculation
-    let correct = 0;
-    for (let i = 0; i < value.length; i++) {
-      if (value[i] === currentSentence[i]) correct++;
-    }
-    const acc = (correct / value.length) * 100 || 0;
-    setAccuracy(parseFloat(acc.toFixed(2)));
-
-    // WPM calculation
-    const timeElapsed = (Date.now() - (startTime ?? 0)) / 60000; // in minutes
-    const words = value.trim().split(" ").length;
-    setWpm(Math.round(words / timeElapsed));
-
-    // Check if completed
-    if (value === currentSentence) {
-      setTimeout(() => {
-        {
-          navigate("/aftergame");
-        }
-      }, 500);
-    }
-  };
-
-  const renderColoredSentence = () => {
-    return currentSentence.split("").map((char, i) => {
-      let className = "text-white";
-      if (i < userInput.length) {
-        className = userInput[i] === char ? "text-green-400" : "text-red-500";
-      }
-
-      return (
-        <span key={i} className={`${className} transition-colors duration-150`}>
-          {char}
-        </span>
-      );
-    });
-  };
+  const handleInputChange = useHandleInputChange({
+    currentSentence,
+    userInput,
+    setUserInput,
+    startTime,
+    setStartTime,
+    mistakes,
+    setMistakes,
+    setWpm,
+    setAccuracy,
+    isGameActive,
+    PostScore,
+    user,
+    wpm,
+    accuracy,
+  });
 
   const getPlaceholderText = () => {
     if (countdown > 0) {
@@ -93,7 +62,10 @@ function GameScreen() {
       <div className="w-full max-w-4xl bg-gray-800 rounded-2xl p-8 shadow-xl">
         <div className="text-center mb-8">
           <div className="text-2xl sm:text-3xl lg:text-4xl max-w-full leading-relaxed font-mono select-none break-words tracking-wide">
-            {renderColoredSentence()}
+            <ColoredSentence
+              currentSentence={currentSentence}
+              userInput={userInput}
+            />
           </div>
         </div>
 
