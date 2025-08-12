@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/userContext";
 import { useSentencePicker } from "../components/sentencePicker";
 import { ColoredSentence } from "../components/coloredSentences";
 import { PostScore } from "../components/postScore";
+import { useHandleInputChange } from "../components/handleInput";
 
 function GameScreen() {
   const { user } = useAuth();
@@ -15,7 +15,6 @@ function GameScreen() {
   const [mistakes, setMistakes] = useState<boolean[]>([]);
   const [sentenceIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
   const [countdown, setCountdown] = useState(3);
   const [isGameActive, setIsGameActive] = useState(false);
 
@@ -34,60 +33,22 @@ function GameScreen() {
     }
   }, [countdown, sentenceIndex]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isGameActive) {
-      return;
-    }
-
-    const value = e.target.value;
-    if (!startTime) setStartTime(Date.now());
-
-    const newMistakes = mistakes.slice();
-    const upTo = Math.min(value.length, currentSentence.length);
-    for (let i = 0; i < upTo; i++) {
-      if (value[i] !== currentSentence[i]) {
-        newMistakes[i] = true; // once true, stays true
-      }
-    }
-
-    setUserInput(value);
-    setMistakes(newMistakes);
-
-    // Accuracy calculation
-    const totalChars = currentSentence.length;
-    let correct = 0;
-    for (let i = 0; i < totalChars; i++) {
-      // if this position was ever marked wrong, it's wrong forever
-      if (newMistakes[i]) continue;
-
-      // only count as correct if the user has typed this char and it matches
-      if (i < value.length && value[i] === currentSentence[i]) {
-        correct++;
-      }
-      // if index >= value.length it's still not typed => counts as incorrect
-    }
-
-    const acc = (correct / totalChars) * 100 || 0;
-    setAccuracy(parseFloat(acc.toFixed(2)));
-
-    // WPM calculation
-    const timeElapsed = (Date.now() - (startTime ?? 0)) / 60000; // in minutes
-    const words = value.trim().split(" ").length;
-    setWpm(Math.round(words / timeElapsed));
-
-    // Check if completed
-    if (value === currentSentence) {
-      setTimeout(() => {
-        {
-          PostScore({
-            playerId: user?.id || 0,
-            wpm,
-            accuracy,
-          }).finally(() => navigate("/aftergame"));
-        }
-      }, 500);
-    }
-  };
+  const handleInputChange = useHandleInputChange({
+    currentSentence,
+    userInput,
+    setUserInput,
+    startTime,
+    setStartTime,
+    mistakes,
+    setMistakes,
+    setWpm,
+    setAccuracy,
+    isGameActive,
+    PostScore,
+    user,
+    wpm,
+    accuracy,
+  });
 
   const getPlaceholderText = () => {
     if (countdown > 0) {
