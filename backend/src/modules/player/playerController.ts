@@ -1,26 +1,11 @@
-import { Router, Request, Response } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 
-const router = Router();
 const prisma = new PrismaClient();
 
-interface CreatePlayerRequestBody {
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface LoginRequestBody {
-  email: string;
-  password: string;
-}
-
 // Controller function for creating player
-const createPlayer = async (
-  req: Request<{}, {}, CreatePlayerRequestBody>,
-  res: Response
-) => {
+const createPlayer = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -51,10 +36,8 @@ const createPlayer = async (
   }
 };
 
-const loginPlayer = async (
-  req: Request<{}, {}, LoginRequestBody>,
-  res: Response
-) => {
+// Controller function for login player
+const loginPlayer = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -87,7 +70,7 @@ const loginPlayer = async (
   }
 };
 
-router.post("/", createPlayer);
-router.post("/login", loginPlayer);
-
-export default router;
+export const playerControllers = {
+  createPlayer,
+  loginPlayer,
+};

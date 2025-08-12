@@ -19,7 +19,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     setError("");
 
     try {
-      const res = await fetch(`${API_URL}/players/`, {
+      const res = await fetch(`${API_URL}/players/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
