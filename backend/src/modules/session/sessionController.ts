@@ -4,10 +4,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const sessionScore = async (req: Request, res: Response) => {
-  const { playerId, accuracy, wpm, combo, score } = req.body;
+  const { playerId, accuracy, wpm } = req.body;
   try {
     const session = await prisma.session.create({
-      data: { playerId, accuracy, wpm, combo, score },
+      data: { playerId, accuracy, wpm },
     });
     res.json(session);
   } catch (e) {

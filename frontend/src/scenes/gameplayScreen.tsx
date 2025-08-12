@@ -1,9 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/userContext";
 import { useSentencePicker } from "../components/sentencePicker";
 import { ColoredSentence } from "../components/coloredSentences";
+import { PostScore } from "../components/postScore";
 
 function GameScreen() {
+  const { user } = useAuth();
   const { currentSentence, getNewSentence } = useSentencePicker();
   const [userInput, setUserInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -80,7 +83,11 @@ function GameScreen() {
     if (value === currentSentence) {
       setTimeout(() => {
         {
-          navigate("/aftergame");
+          PostScore({
+            playerId: user?.id || 0,
+            wpm,
+            accuracy,
+          }).finally(() => navigate("/aftergame"));
         }
       }, 500);
     }
