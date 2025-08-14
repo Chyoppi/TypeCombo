@@ -48,6 +48,7 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
 
     const newMistakes = [...mistakes];
     const upTo = Math.min(value.length, currentSentence.length);
+
     for (let i = 0; i < upTo; i++) {
       if (value[i] !== currentSentence[i]) {
         newMistakes[i] = true;
@@ -59,12 +60,9 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
 
     // Accuracy calculation
     const totalChars = currentSentence.length;
-    let correct = 0;
-    for (let i = 0; i < totalChars; i++) {
-      if (newMistakes[i]) continue;
-      if (i < value.length && value[i] === currentSentence[i]) correct++;
-    }
-    setAccuracy(parseFloat(((correct / totalChars) * 100 || 0).toFixed(2)));
+    const mistakeCount = newMistakes.filter(Boolean).length;
+    const acc = 100 - (mistakeCount / totalChars) * 100;
+    setAccuracy(parseFloat(acc.toFixed(2)));
 
     // WPM calculation
     const timeElapsed = (Date.now() - (startTime ?? 0)) / 60000;

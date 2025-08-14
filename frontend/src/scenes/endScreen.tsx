@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function AfterGame() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-4">
-      <h1>Leaderboards, play again buttons. !! Requires backend !!</h1>
+      <h1>Leaderboards !! Requires backend !!</h1>
       <Link to="/">
         <motion.button
           initial={{ y: 50, opacity: 0 }}
