@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainMenu from "./scenes/mainMenuscreen";
-import GameScreen from "./scenes/gameplayScreen";
-import AfterGame from "./scenes/endScreen";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./components/topHeader";
+import AfterGame from "./scenes/endScreen";
+import GameScreen from "./scenes/gameplayScreen";
+import MainMenu from "./scenes/mainMenuscreen";
 
 function App() {
   return (

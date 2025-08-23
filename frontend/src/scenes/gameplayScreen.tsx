@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../auth/userContext";
-import { useSentencePicker } from "../components/sentencePicker";
 import { ColoredSentence } from "../components/coloredSentences";
-import { PostScore } from "../components/postScore";
 import { useHandleInputChange } from "../components/handleInput";
+import { PostScore } from "../components/postScore";
+import { useSentencePicker } from "../components/sentencePicker";
 
 function GameScreen() {
   const { user } = useAuth();

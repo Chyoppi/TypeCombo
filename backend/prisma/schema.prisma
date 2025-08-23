@@ -28,5 +28,6 @@ model Session {
   playerId      Int
   accuracy      Float
   wpm           Float
+  score         Int      @default(0)
   createdAt     DateTime @default(now())
 }
