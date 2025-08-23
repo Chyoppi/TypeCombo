@@ -1,5 +1,6 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
+import { leaderboardRouter } from "./modules/leaderboard/leaderboardRoutes";
 import { playerRouter } from "./modules/player/playerRoutes";
 import { sessionRouter } from "./modules/session/sessionRoutes";
 
@@ -21,6 +22,7 @@ app.get("/ping", (req, res) => {
 // Routes
 app.use("/players", playerRouter);
 app.use("/session", sessionRouter);
+app.use("/leaderboard", leaderboardRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

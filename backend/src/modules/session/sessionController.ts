@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
-
-const prisma = new PrismaClient();
+import prisma from "./../../prisma";
 
 const sessionScore = async (req: Request, res: Response) => {
   const { playerId, accuracy, wpm, score } = req.body;

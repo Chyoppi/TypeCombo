@@ -1,8 +1,6 @@
-import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Request, Response } from "express";
+import prisma from "./../../prisma";
 
 // Controller function for creating player
 const createPlayer = async (req: Request, res: Response) => {
