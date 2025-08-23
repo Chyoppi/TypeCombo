@@ -15,6 +15,7 @@ interface HandleInputChangeParams {
     playerId: number;
     wpm: number;
     accuracy: number;
+    score: number;
   }) => Promise<void>;
   user: { id: number } | null;
   wpm: number;
@@ -72,10 +73,14 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
     // End game score submission
     if (value === currentSentence) {
       setTimeout(() => {
+        const accFactor = accuracy / 100;
+        const finalScore = Math.round(wpm * 100 * (1 + accFactor));
+
         PostScore({
           playerId: user?.id || 0,
           wpm,
           accuracy,
+          score: finalScore,
         }).finally(() => navigate("/aftergame"));
       }, 500);
     }

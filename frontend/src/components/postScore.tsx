@@ -4,14 +4,15 @@ interface PostScoreProps {
   playerId: number | null; // playerId null if not logged in
   wpm: number;
   accuracy: number;
+  score: number;
 }
 
-async function PostScore({ playerId, wpm, accuracy }: PostScoreProps) {
+async function PostScore({ playerId, wpm, accuracy, score }: PostScoreProps) {
   try {
     const res = await fetch(`${API_URL}/session/score`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ playerId, wpm, accuracy }),
+      body: JSON.stringify({ playerId, wpm, accuracy, score }),
     });
 
     if (!res.ok) {
