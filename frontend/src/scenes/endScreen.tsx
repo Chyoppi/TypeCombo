@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Leaderboard } from "../components/leaderboardTen";
 
 function AfterGame() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-4">
-      <h1>Leaderboards !! Requires backend !!</h1>
+      <Leaderboard />
       <Link to="/">
         <motion.button
           initial={{ y: 50, opacity: 0 }}
