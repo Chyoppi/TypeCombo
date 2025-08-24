@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../auth/userContext.tsx";
+import type { ModalProps } from "../types/accountTypes";
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface SignInModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
+export default function SignInModal({ isOpen, onClose }: ModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -35,7 +31,6 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
         console.error(data.error);
       }
 
-      console.log("Logged in:", data); // Delete this line in production
       onClose();
     } catch (err) {
       setError("Network error, try again.");

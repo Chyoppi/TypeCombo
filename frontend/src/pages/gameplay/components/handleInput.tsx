@@ -1,26 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
-interface HandleInputChangeParams {
-  currentSentence: string;
-  userInput: string;
-  setUserInput: (val: string) => void;
-  startTime: number | null;
-  setStartTime: (time: number | null) => void;
-  mistakes: boolean[];
-  setMistakes: (val: boolean[]) => void;
-  setWpm: (wpm: number) => void;
-  setAccuracy: (acc: number) => void;
-  isGameActive: boolean;
-  PostScore: (data: {
-    playerId: number;
-    wpm: number;
-    accuracy: number;
-    score: number;
-  }) => Promise<void>;
-  user: { id: number } | null;
-  wpm: number;
-  accuracy: number;
-}
+import type { HandleInputChangeParams } from "../../../types/gameplayTypes";
 
 export function useHandleInputChange(params: HandleInputChangeParams) {
   const navigate = useNavigate();

@@ -1,11 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
-
-interface PostScoreProps {
-  playerId: number | null; // playerId null if not logged in
-  wpm: number;
-  accuracy: number;
-  score: number;
-}
+import type { PostScoreProps } from "../../../types/gameplayTypes";
 
 async function PostScore({ playerId, wpm, accuracy, score }: PostScoreProps) {
   try {

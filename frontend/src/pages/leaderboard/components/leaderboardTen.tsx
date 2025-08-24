@@ -1,14 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import type { LeaderboardEntry } from "../../../types/leaderboardTypes";
 const API_URL = import.meta.env.VITE_API_URL;
-
-interface LeaderboardEntry {
-  id: number;
-  score: number;
-  wpm: number;
-  accuracy: number;
-  player: { username: string };
-}
 
 export function Leaderboard() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
