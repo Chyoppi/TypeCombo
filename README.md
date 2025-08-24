@@ -14,7 +14,7 @@ Game has two modes
 - [React](https://react.dev/) + [Vite](https://vite.dev/guide/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind](https://tailwindcss.com/)
-- [Framer-Motion] (https://www.npmjs.com/package/framer-motion)
+- [Framer-Motion](https://www.npmjs.com/package/framer-motion)
 
 ### BackEnd
 
