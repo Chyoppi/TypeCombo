@@ -1,12 +1,8 @@
 import { useState } from "react";
+import type { ModalProps } from "../types/accountTypes";
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface RegisterModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
+export default function RegisterModal({ isOpen, onClose }: ModalProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +28,6 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
         return;
       }
 
-      console.log("Registered:", data); // Delete this line in production
       onClose();
     } catch (err) {
       console.error(err);
