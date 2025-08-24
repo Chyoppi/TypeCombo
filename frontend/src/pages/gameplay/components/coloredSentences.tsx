@@ -1,7 +1,4 @@
-interface ColoredSentenceProps {
-  currentSentence: string;
-  userInput: string;
-}
+import type { ColoredSentenceProps } from "../../../types/gameplayTypes";
 
 export const ColoredSentence = ({
   currentSentence,
