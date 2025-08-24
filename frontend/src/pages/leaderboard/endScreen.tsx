@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Leaderboard } from "../components/leaderboardTen";
+import { Leaderboard } from "./components/leaderboardTen";
 
 function AfterGame() {
   return (

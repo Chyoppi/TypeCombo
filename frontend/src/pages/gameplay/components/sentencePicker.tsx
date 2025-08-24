@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import sentencesData from "../data/randomSentence.json";
+import { useCallback, useState } from "react";
+import sentencesData from "../../../data/randomSentence.json";
 
 export const useSentencePicker = () => {
   const [currentSentence, setCurrentSentence] = useState("");
