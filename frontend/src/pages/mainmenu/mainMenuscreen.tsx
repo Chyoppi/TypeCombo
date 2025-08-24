@@ -33,7 +33,7 @@ function MainMenu() {
           Daily
         </motion.button>
       </Link>
-      <Link to="/">
+      <Link to="/aftergame">
         <motion.button
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
