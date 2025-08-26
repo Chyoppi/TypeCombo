@@ -7,12 +7,28 @@ export default function RegisterModal({ isOpen, onClose }: ModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setError("");
+    setIsLoading(false);
+    onClose();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoading) return;
     setError("");
+    if (!API_URL) {
+      setError("API URL is not defined");
+      return;
+    }
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${API_URL}/players/register`, {
@@ -24,14 +40,16 @@ export default function RegisterModal({ isOpen, onClose }: ModalProps) {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Registration failed");
+        setError(data?.error ?? data?.message ?? "Registration failed");
         return;
       }
 
-      onClose();
+      handleClose();
     } catch (err) {
-      console.error(err);
-      setError("Something went wrong");
+      setError("Network error, try again.");
+      if (import.meta.env.DEV) console.error(err); // Log error only in development
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,6 +93,7 @@ export default function RegisterModal({ isOpen, onClose }: ModalProps) {
           />
           <button
             type="submit"
+            disabled={isLoading}
             className="bg-blue-500 hover:bg-blue-600 rounded p-3 font-semibold"
           >
             Register

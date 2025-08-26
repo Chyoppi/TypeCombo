@@ -23,7 +23,7 @@ export default function SignInModal({ isOpen, onClose }: ModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLoading) return;
-    setError(""); // clear previous errors
+    setError("");
     if (!API_URL) {
       setError("API URL is not defined");
       return;
@@ -48,6 +48,8 @@ export default function SignInModal({ isOpen, onClose }: ModalProps) {
     } catch (err) {
       setError("Network error, try again.");
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -83,6 +85,7 @@ export default function SignInModal({ isOpen, onClose }: ModalProps) {
           />
           <button
             type="submit"
+            disabled={isLoading}
             className="bg-blue-500 hover:bg-blue-600 rounded p-3 font-semibold"
           >
             Sign In
