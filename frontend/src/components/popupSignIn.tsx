@@ -7,13 +7,28 @@ export default function SignInModal({ isOpen, onClose }: ModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    setEmail("");
+    setPassword("");
+    setError("");
+    setIsLoading(false);
+    onClose();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoading) return;
     setError(""); // clear previous errors
+    if (!API_URL) {
+      setError("API URL is not defined");
+      return;
+    }
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${API_URL}/players/login`, {
@@ -26,14 +41,13 @@ export default function SignInModal({ isOpen, onClose }: ModalProps) {
 
       if (res.ok) {
         login(data);
-        onClose();
+        handleClose();
       } else {
-        console.error(data.error);
+        setError(data?.error ?? data?.message ?? "Login failed");
       }
-
-      onClose();
     } catch (err) {
       setError("Network error, try again.");
+      console.error(err);
     }
   };
 
