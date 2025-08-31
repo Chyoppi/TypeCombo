@@ -11,11 +11,15 @@ Game has two modes
 
 ### FrontEnd
 
-- [React](https://react.dev/) + [Vite](https://vite.dev/guide/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind](https://tailwindcss.com/)
-- [Framer-Motion](https://www.npmjs.com/package/framer-motion)
+- [React](https://react.dev/) + [Vite](https://vite.dev/guide/) Framework
+- [TypeScript](https://www.typescriptlang.org/) Coding language used for this project
+- [Tailwind](https://tailwindcss.com/) Styling
+- [Framer-Motion](https://www.npmjs.com/package/framer-motion) Used for animations
 
 ### BackEnd
 
-- [Prisma](https://prisma.io/) + [PostgreSQL](https://www.postgresql.org/)
+- [Node.js](https://nodejs.org/en) Used for running the server and the scripts
+- [TypeScript](https://www.typescriptlang.org/) Coding language used for this project
+- [Prisma](https://prisma.io/) + [PostgreSQL](https://www.postgresql.org/) Database
+- [Express](https://expressjs.com/) RESTful API
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) Used for hashing passwords
