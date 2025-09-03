@@ -6,6 +6,9 @@ const topTenLeaderboard = {
   getTopPlayers: async (req: Request, res: Response) => {
     try {
       const topPlayers = await prisma.session.findMany({
+        where: {
+          daily: false,
+        },
         orderBy: { score: "desc" },
         take: 10,
         select: {
