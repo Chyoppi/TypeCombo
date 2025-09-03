@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import { dailyRouter } from "./modules/dailychallenge/dailychallengeRoutes";
 import { leaderboardRouter } from "./modules/leaderboard/leaderboardRoutes";
 import { playerRouter } from "./modules/player/playerRoutes";
 import { sessionRouter } from "./modules/session/sessionRoutes";
@@ -23,6 +24,7 @@ app.get("/ping", (req, res) => {
 app.use("/players", playerRouter);
 app.use("/session", sessionRouter);
 app.use("/leaderboard", leaderboardRouter);
+app.use("/dailychallenge", dailyRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
