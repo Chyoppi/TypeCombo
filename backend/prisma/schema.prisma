@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Player {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  createdAt DateTime  @default(now())
-  email     String    @unique
-  password  String
-  sessions  Session[]
+  id                    Int                     @id @default(autoincrement())
+  username              String                  @unique
+  createdAt             DateTime                @default(now())
+  email                 String                  @unique
+  password              String
+  sessions              Session[]
+  DailyChallengeAttempt DailyChallengeAttempt[]
 }
 
 model Session {
@@ -25,4 +26,30 @@ model Session {
   score     Int      @default(0)
   daily     Boolean  @default(false)
   player    Player   @relation(fields: [playerId], references: [id])
+}
+
+model Sentence {
+  id        Int      @id @default(autoincrement())
+  text      String   @unique
+  createdAt DateTime @default(now())
+}
+
+model DailyChallenge {
+  id        Int                     @id @default(autoincrement())
+  date      DateTime                @unique
+  sentence  String
+  createdAt DateTime                @default(now())
+  attempts  DailyChallengeAttempt[]
+}
+
+model DailyChallengeAttempt {
+  id          Int      @id @default(autoincrement())
+  playerId    Int
+  challengeId Int
+  createdAt   DateTime @default(now())
+
+  player    Player         @relation(fields: [playerId], references: [id])
+  challenge DailyChallenge @relation(fields: [challengeId], references: [id])
+
+  @@unique([playerId, challengeId])
 }

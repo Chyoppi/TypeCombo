@@ -1,7 +1,8 @@
 import cors from "cors";
 import express from "express";
-import { dailyRouter } from "./modules/dailychallenge/dailychallengeRoutes";
+import { dailyRouter } from "./modules/dailygame/dailyRoutes";
 import { leaderboardRouter } from "./modules/leaderboard/leaderboardRoutes";
+import { sentenceRouter } from "./modules/normalgame/sentenceRoutes";
 import { playerRouter } from "./modules/player/playerRoutes";
 import { sessionRouter } from "./modules/session/sessionRoutes";
 
@@ -15,7 +16,7 @@ app.use(
 );
 app.use(express.json());
 
-//Testing endpoint
+//Testing endpoint, keeping this here for development
 app.get("/ping", (req, res) => {
   res.json({ message: "pong" });
 });
@@ -24,7 +25,8 @@ app.get("/ping", (req, res) => {
 app.use("/players", playerRouter);
 app.use("/session", sessionRouter);
 app.use("/leaderboard", leaderboardRouter);
-app.use("/dailychallenge", dailyRouter);
+app.use("/dailychallenge", dailyRouter); // Daily challenge routes
+app.use("/sentences", sentenceRouter); // For normal games
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

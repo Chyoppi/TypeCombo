@@ -1,18 +1,20 @@
-import { useCallback, useState } from "react";
-import sentencesData from "../../../data/randomSentence.json";
+import { useState } from "react";
 
-export const useSentencePicker = () => {
-  const [currentSentence, setCurrentSentence] = useState("");
+const API_URL = import.meta.env.VITE_API_URL;
 
-  const getNewSentence = useCallback(() => {
-    const sentences = sentencesData.sentencesData;
-    if (sentences && sentences.length > 0) {
-      const randomIndex = Math.floor(Math.random() * sentences.length);
-      setCurrentSentence(sentences[randomIndex]);
-      return sentences[randomIndex];
+export function useSentencePicker() {
+  const [currentSentence, setCurrentSentence] = useState<string>("");
+
+  const getNewSentence = async () => {
+    try {
+      const res = await fetch(`${API_URL}/sentences/random`);
+      if (!res.ok) throw new Error("Failed to fetch sentence");
+      const data = await res.json();
+      setCurrentSentence(data.text); // backend returns { id, text }
+    } catch (err) {
+      console.error("Error fetching sentence:", err);
     }
-    return "Failed to load TypeCombo game.";
-  }, []);
+  };
 
   return { currentSentence, getNewSentence };
-};
+}

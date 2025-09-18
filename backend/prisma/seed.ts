@@ -1,5 +1,10 @@
-{
-  "sentencesData": [
+//Seed for setting sentences in the database
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+async function main() {
+  const sentences = [
     "The sun rose over the quiet mountains, casting a golden hue across the valley. A gentle breeze rustled the leaves of the ancient trees, creating a soft, rhythmic sound. It was a perfect morning for a walk.",
     "A new book had just arrived at the local library, and its cover promised a great adventure. The story was set in a land filled with mythical creatures and hidden treasures. She couldn't wait to begin reading.",
     "The old clock in the town square chimed loudly, signaling the start of a new hour. Pigeons scattered from their perches on the rooftops and flew into the clear blue sky. People hurried along the cobblestone streets.",
@@ -49,6 +54,25 @@
     "She walked along the riverbank, her footsteps quiet on the soft, grassy path. The water flowed steadily, carrying leaves and branches downstream. The river was a symbol of constant change.",
     "The sound of the anvil ringing with each hammer stroke echoed through the workshop. The blacksmith, a master of his craft, was shaping a piece of glowing hot metal into a useful tool. It was a display of skill and strength.",
     "He sat by a campfire, watching the flames dance and listening to the crackling wood. The stars shone brightly in the clear night sky, a cosmic ceiling to his humble camp. It was a peaceful end to a long day.",
-    "The old bookstore was a maze of shelves, each one filled with untold stories and forgotten words. He spent hours getting lost in its labyrinthine passages, always finding something new and exciting. It was his happy place."
-  ]
+    "The old bookstore was a maze of shelves, each one filled with untold stories and forgotten words. He spent hours getting lost in its labyrinthine passages, always finding something new and exciting. It was his happy place.",
+  ];
+
+  for (const text of sentences) {
+    await prisma.sentence.upsert({
+      where: { text },
+      update: {},
+      create: { text },
+    });
+  }
+
+  console.log("Sentences seeded!");
 }
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
