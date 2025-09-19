@@ -5,6 +5,10 @@ import { leaderboardRouter } from "./modules/leaderboard/leaderboardRoutes";
 import { sentenceRouter } from "./modules/normalgame/sentenceRoutes";
 import { playerRouter } from "./modules/player/playerRoutes";
 import { sessionRouter } from "./modules/session/sessionRoutes";
+import {
+  dailyChallengeScheduler,
+  setDailyChallenge,
+} from "./scheduler/dailyChallengeScheduler";
 
 const app = express();
 
@@ -27,6 +31,9 @@ app.use("/session", sessionRouter);
 app.use("/leaderboard", leaderboardRouter);
 app.use("/dailychallenge", dailyRouter); // Daily challenge routes
 app.use("/sentences", sentenceRouter); // For normal games
+
+setDailyChallenge();
+dailyChallengeScheduler(); // This function runs the cron job to set daily challenges
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

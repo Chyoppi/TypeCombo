@@ -1,36 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma";
 
-async function getRandomSentenceFromDB(): Promise<string> {
-  const sentences = await prisma.sentence.findMany();
-  if (sentences.length === 0) {
-    throw new Error("No sentences in the database");
-  }
-  const randomIndex = Math.floor(Math.random() * sentences.length);
-  return sentences[randomIndex].text;
-}
-
-// Controller to set the daily challenge (can be used by cron or manually)
-const setDailyChallenge = async (req: Request, res: Response) => {
-  try {
-    const text = await getRandomSentenceFromDB();
-
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-
-    const challenge = await prisma.dailyChallenge.upsert({
-      where: { date: today },
-      update: { text },
-      create: { date: today, text },
-    });
-
-    res.json({ message: "Daily challenge set", challenge });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to set daily challenge" });
-  }
-};
-
 const getDailyChallenge = async (req: Request, res: Response) => {
   try {
     const today = new Date();
@@ -52,6 +22,5 @@ const getDailyChallenge = async (req: Request, res: Response) => {
 };
 
 export const dailyControllers = {
-  setDailyChallenge,
   getDailyChallenge,
 };
