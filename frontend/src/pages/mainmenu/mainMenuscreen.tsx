@@ -23,7 +23,7 @@ function MainMenu() {
           Start Game
         </motion.button>
       </Link>
-      <Link to="/">
+      <Link to="/daily">
         <motion.button
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

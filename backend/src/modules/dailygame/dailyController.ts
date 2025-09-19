@@ -1,40 +1,57 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma";
 
-function getDailyIndex(total: number): number {
-  const today = new Date().toISOString().split("T")[0];
-
-  let hash = 0;
-  for (let i = 0; i < today.length; i++) {
-    hash = (hash << 5) - hash + today.charCodeAt(i);
-    hash |= 0;
+async function getRandomSentenceFromDB(): Promise<string> {
+  const sentences = await prisma.sentence.findMany();
+  if (sentences.length === 0) {
+    throw new Error("No sentences in the database");
   }
-  return Math.abs(hash) % total;
+  const randomIndex = Math.floor(Math.random() * sentences.length);
+  return sentences[randomIndex].text;
 }
 
-// Daily challenge controller (to be implemented)
-const dailyChallenge = {
-  getDailyChallenge: async (req: Request, res: Response) => {
-    try {
-      const sentences = await prisma.sentence.findMany();
-      if (sentences.length === 0) {
-        return res.status(404).json({ error: "No sentences available" });
-      }
+// Controller to set the daily challenge (can be used by cron or manually)
+const setDailyChallenge = async (req: Request, res: Response) => {
+  try {
+    const text = await getRandomSentenceFromDB();
 
-      const index = getDailyIndex(sentences.length);
-      const dailySentence = sentences[index];
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
 
-      res.json({
-        date: new Date().toISOString().split("T")[0],
-        sentence: dailySentence,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Failed to fetch daily challenge" });
+    const challenge = await prisma.dailyChallenge.upsert({
+      where: { date: today },
+      update: { text },
+      create: { date: today, text },
+    });
+
+    res.json({ message: "Daily challenge set", challenge });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to set daily challenge" });
+  }
+};
+
+const getDailyChallenge = async (req: Request, res: Response) => {
+  try {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const challenge = await prisma.dailyChallenge.findUnique({
+      where: { date: today },
+    });
+
+    if (!challenge) {
+      return res.status(404).json({ error: "No daily challenge found" });
     }
-  },
+
+    res.json(challenge);
+  } catch (err) {
+    console.error("Error fetching daily challenge:", err);
+    res.status(500).json({ error: "Failed to fetch daily challenge" });
+  }
 };
 
 export const dailyControllers = {
-  dailyChallenge,
+  setDailyChallenge,
+  getDailyChallenge,
 };

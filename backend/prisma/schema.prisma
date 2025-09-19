@@ -14,7 +14,6 @@ model Player {
   email                 String                  @unique
   password              String
   sessions              Session[]
-  DailyChallengeAttempt DailyChallengeAttempt[]
 }
 
 model Session {
@@ -37,19 +36,6 @@ model Sentence {
 model DailyChallenge {
   id        Int                     @id @default(autoincrement())
   date      DateTime                @unique
-  sentence  String
+  text  String
   createdAt DateTime                @default(now())
-  attempts  DailyChallengeAttempt[]
-}
-
-model DailyChallengeAttempt {
-  id          Int      @id @default(autoincrement())
-  playerId    Int
-  challengeId Int
-  createdAt   DateTime @default(now())
-
-  player    Player         @relation(fields: [playerId], references: [id])
-  challenge DailyChallenge @relation(fields: [challengeId], references: [id])
-
-  @@unique([playerId, challengeId])
 }

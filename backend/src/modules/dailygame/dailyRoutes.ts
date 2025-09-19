@@ -4,4 +4,5 @@ import { dailyControllers } from "./dailyController";
 export const dailyRouter = express.Router();
 
 // Backend route to get the daily challenge
-dailyRouter.get("/daily", dailyControllers.dailyChallenge.getDailyChallenge);
+dailyRouter.get("/daily", dailyControllers.getDailyChallenge);
+dailyRouter.post("/setdaily", dailyControllers.setDailyChallenge);
