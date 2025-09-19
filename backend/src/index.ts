@@ -4,11 +4,11 @@ import { dailyRouter } from "./modules/dailygame/dailyRoutes";
 import { leaderboardRouter } from "./modules/leaderboard/leaderboardRoutes";
 import { sentenceRouter } from "./modules/normalgame/sentenceRoutes";
 import { playerRouter } from "./modules/player/playerRoutes";
-import { sessionRouter } from "./modules/session/sessionRoutes";
 import {
   dailyChallengeScheduler,
   setDailyChallenge,
-} from "./scheduler/dailyChallengeScheduler";
+} from "./modules/scheduler/dailyChallengeScheduler";
+import { sessionRouter } from "./modules/session/sessionRoutes";
 
 const app = express();
 

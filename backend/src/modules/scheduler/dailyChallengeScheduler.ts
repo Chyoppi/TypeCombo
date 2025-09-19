@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import prisma from "../prisma";
+import prisma from "../../prisma";
 
 // Picks random sentence from Sentence table
 async function getRandomSentenceFromDB(): Promise<string> {
