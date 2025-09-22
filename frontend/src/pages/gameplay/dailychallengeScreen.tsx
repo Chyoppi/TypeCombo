@@ -25,11 +25,15 @@ function DailyScreen() {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
       }, 1000);
+
+      if (countdown === 1) {
+        getDailyChallenge();
+      }
+
       return () => clearTimeout(timer);
     } else {
       setIsGameActive(true);
       inputRef.current?.focus();
-      getDailyChallenge();
       setUserInput("");
     }
   }, [countdown, sentenceIndex]);

@@ -24,6 +24,11 @@ function GameScreen() {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
       }, 1000);
+
+      if (countdown === 1) {
+        useSentencePicker();
+      }
+
       return () => clearTimeout(timer);
     } else {
       setIsGameActive(true);
