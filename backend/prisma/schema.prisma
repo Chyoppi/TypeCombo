@@ -36,6 +36,6 @@ model Sentence {
 model DailyChallenge {
   id        Int                     @id @default(autoincrement())
   date      DateTime                @unique
-  text  String
+  text      String
   createdAt DateTime                @default(now())
 }

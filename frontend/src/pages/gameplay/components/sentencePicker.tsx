@@ -10,7 +10,7 @@ export function useSentencePicker() {
       const res = await fetch(`${API_URL}/sentences/random`);
       if (!res.ok) throw new Error("Failed to fetch sentence");
       const data = await res.json();
-      setCurrentSentence(data.text); // backend returns { id, text }
+      setCurrentSentence(data.text);
     } catch (err) {
       console.error("Error fetching sentence:", err);
     }

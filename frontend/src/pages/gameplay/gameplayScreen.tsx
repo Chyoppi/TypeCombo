@@ -26,14 +26,13 @@ function GameScreen() {
       }, 1000);
 
       if (countdown === 1) {
-        useSentencePicker();
+        getNewSentence();
       }
 
       return () => clearTimeout(timer);
     } else {
       setIsGameActive(true);
       inputRef.current?.focus();
-      getNewSentence();
       setUserInput("");
     }
   }, [countdown, sentenceIndex]);
