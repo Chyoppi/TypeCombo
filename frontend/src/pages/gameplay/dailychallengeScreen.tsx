@@ -53,6 +53,7 @@ function DailyScreen() {
     user,
     wpm,
     accuracy,
+    daily: true,
   });
 
   const getPlaceholderText = () => {

@@ -17,10 +17,12 @@ export interface HandleInputChangeParams {
     wpm: number;
     accuracy: number;
     score: number;
+    daily: boolean;
   }) => Promise<void>;
   user: { id: number } | null;
   wpm: number;
   accuracy: number;
+  daily: boolean;
 }
 
 // Props for colored sentence component
@@ -35,4 +37,5 @@ export interface PostScoreProps {
   wpm: number;
   accuracy: number;
   score: number;
+  daily: boolean;
 }

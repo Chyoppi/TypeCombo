@@ -1,12 +1,18 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import type { PostScoreProps } from "../../../types/gameplayTypes";
 
-async function PostScore({ playerId, wpm, accuracy, score }: PostScoreProps) {
+async function PostScore({
+  playerId,
+  wpm,
+  accuracy,
+  score,
+  daily,
+}: PostScoreProps) {
   try {
     const res = await fetch(`${API_URL}/session/score`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ playerId, wpm, accuracy, score }),
+      body: JSON.stringify({ playerId, wpm, accuracy, score, daily }),
     });
 
     if (!res.ok) {
