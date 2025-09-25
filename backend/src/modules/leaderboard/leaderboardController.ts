@@ -12,6 +12,7 @@ const topTenLeaderboard = {
         orderBy: { score: "desc" },
         take: 10,
         select: {
+          id: true,
           player: {
             select: {
               username: true,
