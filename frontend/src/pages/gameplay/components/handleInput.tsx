@@ -62,7 +62,13 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
           accuracy,
           score: finalScore,
           daily,
-        }).finally(() => navigate("/aftergame"));
+        }).finally(() => {
+          if (daily) {
+            navigate("/dailyafter");
+          } else {
+            navigate("/normalafter");
+          }
+        });
       }, 500);
     }
   };
