@@ -32,7 +32,7 @@ app.use("/leaderboard", leaderboardRouter);
 app.use("/dailychallenge", dailyRouter); // Daily challenge routes
 app.use("/sentences", sentenceRouter); // For normal games
 
-setDailyChallenge();
+setDailyChallenge().catch(err => console.error("Failed to initialize daily challenge:", err));
 dailyChallengeScheduler(); // This function runs the cron job to set daily challenges
 
 const PORT = process.env.PORT || 4000;
