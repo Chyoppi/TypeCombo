@@ -3,7 +3,7 @@ import { useAuth } from "../../auth/userContext";
 import { ColoredSentence } from "./components/coloredSentences";
 import { useHandleInputChange } from "./components/handleInput";
 import { PostScore } from "./components/postScore";
-import { useSentencePicker } from "./components/sentencePicker";
+import { useSentencePicker } from "./components/fetchNormal";
 
 function GameScreen() {
   const { user } = useAuth();
