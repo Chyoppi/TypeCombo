@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Leaderboard } from "./components/leaderboardTen";
 
-function AfterGame() {
+export function NormalAfterGame() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-4">
       <Leaderboard />
@@ -19,4 +19,3 @@ function AfterGame() {
     </div>
   );
 }
-export default AfterGame;

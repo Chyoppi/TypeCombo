@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../auth/userContext";
 import { ColoredSentence } from "./components/coloredSentences";
+import { useDailySentencePicker } from "./components/fetchDaily";
 import { useHandleInputChange } from "./components/handleInput";
 import { PostScore } from "./components/postScore";
-import { useSentencePicker } from "./components/fetchNormal";
 
-function GameScreen() {
+// Copy of gameplayScreen with modifications for daily challenge mode
+function DailyScreen() {
   const { user } = useAuth();
-  const { currentSentence, getNewSentence } = useSentencePicker();
+  const { currentSentence, getDailyChallenge } = useDailySentencePicker();
   const [userInput, setUserInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
   const [wpm, setWpm] = useState(0);
@@ -26,7 +27,7 @@ function GameScreen() {
       }, 1000);
 
       if (countdown === 1) {
-        getNewSentence();
+        getDailyChallenge();
       }
 
       return () => clearTimeout(timer);
@@ -52,7 +53,7 @@ function GameScreen() {
     user,
     wpm,
     accuracy,
-    daily: false,
+    daily: true,
   });
 
   const getPlaceholderText = () => {
@@ -62,7 +63,6 @@ function GameScreen() {
     return "Start typing...";
   };
 
-  // Visual of Gameplay screen
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white gap-6 px-4">
       <div className="w-full max-w-4xl bg-gray-800 rounded-2xl p-8 shadow-xl">
@@ -104,4 +104,4 @@ function GameScreen() {
   );
 }
 
-export default GameScreen;
+export default DailyScreen;

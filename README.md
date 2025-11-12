@@ -23,3 +23,4 @@ Game has two modes
 - [Prisma](https://prisma.io/) + [PostgreSQL](https://www.postgresql.org/) Database
 - [Express](https://expressjs.com/) RESTful API
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) Used for hashing passwords
+- [node-cron](https://www.npmjs.com/package/node-cron) Used for getting new daily sentence

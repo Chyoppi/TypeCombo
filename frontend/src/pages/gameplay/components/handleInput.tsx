@@ -19,6 +19,7 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
       user,
       wpm,
       accuracy,
+      daily,
     } = params;
 
     if (!isGameActive) return;
@@ -60,7 +61,14 @@ export function useHandleInputChange(params: HandleInputChangeParams) {
           wpm,
           accuracy,
           score: finalScore,
-        }).finally(() => navigate("/aftergame"));
+          daily,
+        }).finally(() => {
+          if (daily) {
+            navigate("/dailyafter");
+          } else {
+            navigate("/normalafter");
+          }
+        });
       }, 500);
     }
   };
