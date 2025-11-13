@@ -81,6 +81,7 @@ export default function RegisterModal({ isOpen, onClose }: ModalProps) {
             className="p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username" 
             required
           />
           <input
